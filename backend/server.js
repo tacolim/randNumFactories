@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
 const auth = require('./controllers/Auth');
-const card = require('./controllers/Tree');
+const tree = require('./controllers/Tree');
 
 
 const DB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/trees';

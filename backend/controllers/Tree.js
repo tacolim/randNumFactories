@@ -5,7 +5,7 @@ const Tree = require('../models/tree');
 
 const SECRET = process.env.APP_SECRET;
 
-const Treeontroller = {
+const TreeController = {
     async get(req, res) {
       try {
         const authToken = req.headers.authorization.replace('Bearer ', '');
