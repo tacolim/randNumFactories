@@ -46,7 +46,7 @@ const TreeController = {
         const user = await User.findOne({ username }).exec();
         const id = user._id;
   
-        const { tree, title } = req.body;
+        const { tree, title, factories } = req.body;
 
         date = new Date(Date.now());
         datevalues = [
@@ -57,12 +57,12 @@ const TreeController = {
            date.getMinutes(),
            date.getSeconds(),
         ];
-        dateString = datevalues.toString();
+        dateString = datevalues.join('-');
   
         const newTree = await Tree.create({
           author: id,
           title: title || 'Tree_' + dateString,
-          content: JSON.stringify(tree),
+          factories: factories,
         });
   
         user.trees.push(newTree._id);
@@ -76,8 +76,39 @@ const TreeController = {
         res.status(422).json({ error: 'Failed to create tree' });
       }
     },
-    edit(req, res) {
-      res.json({});
+    async edit(req, res) {
+      try {
+        const authToken = req.headers.authorization.replace('Bearer ', '');
+        const decodedToken = await jwt.verify(authToken, SECRET);
+        const { username } = decodedToken;
+        const user = await User.findOne({ username }).exec();
+        const id = user._id;
+  
+        const { title, factories } = req.body;
+
+        date = new Date(Date.now());
+        datevalues = [
+           date.getFullYear(),
+           date.getMonth()+1,
+           date.getDate(),
+           date.getHours(),
+           date.getMinutes(),
+           date.getSeconds(),
+        ];
+        dateString = datevalues.join('-');
+
+        const updatedTree = await Tree.findByIDAndUpdate(
+          { _id: req.params.TreeId }, { title: title || 'TreeUpdate_' + dateString, factories: factories }, { new: true }
+        );
+  
+        const updateUser = await user.save();
+
+        res.json({ updatedTree });
+
+      } catch (e) {
+        console.log('/tree/edit', e);
+        res.status(422).json({ error: 'Failed to edit tree' });
+      }
     },
   };
   
