@@ -1,0 +1,64 @@
+
+.root {
+  background: #ffffff;
+  max-width: 1440px;
+  margin: 0 auto;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 4px;
+}
+.welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Raleway', sans-serif;
+}
+.welcome span {
+    color: #003366;
+}
+.create {
+  text-decoration: none;
+  background: #003366;
+  color: #fff;
+  padding: 10px 20px;
+}
+.content {
+    border: 3px solid red;
+}
+.content .empty {
+  display: block;
+  padding: 75px;
+  background: #99adc2;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  border: 3px solid green;
+}
+.content .empty span {
+  display: block;
+  color: #003366;
+  font-family: 'Raleway', sans-serif;
+  padding: 5px;
+}
+.content .tree-link {
+  display: block;
+}
+.trees {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background: #249999;
+  border: 3px solid blue;
+}
+.trees .tree-link {
+  min-width: 250px;
+  padding: 10px 25px;
+  box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  width: 300px;
+  border: 2px solid #125454;
+  text-decoration: none;
+  color: #125454;
+  background: #fff;
+}
+        

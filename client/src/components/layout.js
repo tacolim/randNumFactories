@@ -5,7 +5,7 @@ import './layout.css';
 const Layout = props => (
   <div className="page">
     <header>
-      <div className="content">
+      <div className="layout_content">
         <div className="title">
           <Link to="/trees">Random Number Factories</Link>
         </div>

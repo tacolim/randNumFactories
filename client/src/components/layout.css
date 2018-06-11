@@ -1,14 +1,16 @@
 header {
-  height: 80px;          
-  box-shadow: 0 10px 30px 0 rgba(229,238,242,.5);
+  box-shadow: 0 10px 30px 0 rgba(184, 201, 209, 0.5);
   background: #fff;
   position: relative;
+  height: 5em;
   z-index: 1;
   max-width: 100%;
 }
-header .content {
+header .layout_content {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  align-content: center;
   padding: 15px; 
   max-height: 100%;
   max-width: 1440px;
@@ -17,33 +19,32 @@ header .content {
   height: 80px;
 }
 header nav {
-  align-self: center;
-  border: 3px solid red;
+  align-self: top;
 }
 header nav a {
-  background: #003366;
-  color: white;
+  background: #99adc2;
+  color: #003366;
+  font-family: 'Raleway', sans-serif;
   padding: 10px 32px;
   border-radius: 30px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  border: 3px solid blue;
 }
 .title a {
   display: inline-block;
-  height: 100%;
+  width: 8em;
   font-family: 'Fredericka the Great', Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.2em;
   text-align: center;
   color: #003366;
-  border: 3px solid green;
 }
 .navigation {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 75px 20px;
+  padding: 10px 20px;
   max-width: 1440px;
   margin: 0 auto;
 }
