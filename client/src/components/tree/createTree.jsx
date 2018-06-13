@@ -16,13 +16,15 @@ class CreateTree extends Component {
       rangeMax: 0,
     };
   }
-
+  
+  // handle event for changes in form fields
   handleChange(e, field) {
     this.setState({
       [field]: e.target.value,
     });
   }
-
+  
+  // function to get random number for nodes
   getRand = (min, max) => {
     if (min <= max) {
       min = Math.ceil(min);
@@ -34,9 +36,10 @@ class CreateTree extends Component {
     }
   }
 
-  onAddBtnClick = (event) => {
+  // handle event for adding a factory
+  onAddFactoryClick = (event) => {
     let factories = this.state.factories;
-    let numNodes = this.state.numNodes;
+    let numNodes = parseInt(this.state.numNodes, 10);
     let rangeMin = parseInt(this.state.rangeMin, 10);
     let rangeMax = parseInt(this.state.rangeMax, 10);
     let nodes = this.state.nodes;
@@ -52,11 +55,24 @@ class CreateTree extends Component {
     }
     this.setState({
         factories: factories.concat({
-          factID: uuidv4(),
           factTitle: this.state.factTitle,
           nodes: this.state.nodes,
+          numNodes: numNodes,
+          rangeMin: rangeMin,
+          rangeMax: rangeMax,
         }),
         nodes: [],
+    });
+  }
+
+  // handle event for deleting a factory
+  onDeleteFactoryClick = (index, event) => {
+    let newFactories = this.state.factories;
+    let newFactories1 = newFactories.slice(0, index);
+    let newFactories2 = newFactories.slice(index+1, newFactories.length+1);
+    newFactories = newFactories1.concat(newFactories2);
+    this.setState({
+        factories: newFactories,
     });
   }
 
@@ -69,7 +85,7 @@ class CreateTree extends Component {
         <div className="root">
           <div className="createTitle">
             <h2>Customize Your Tree</h2>
-            <button>Save Your Tree!</button>
+            <button type="button" className="saveTree">Save Your Tree!</button>
           </div>
           <section className="tree_content">
             <section className="tree-area">
@@ -92,23 +108,23 @@ class CreateTree extends Component {
                   <label htmlFor="factoryRangeMax">Random Number Maximum:</label><br/>
                   <input type="number" name="factoryRangeMax" value={this.state.rangeMax} onChange={event => this.handleChange(event, 'rangeMax')} />
                   <br />
-                  <button type="button" onClick={event => this.onAddBtnClick(event)}>Add Factory!</button>
+                  <button type="button" onClick={event => this.onAddFactoryClick(event)}>Add Factory!</button>
                 </form>
               </div>
             </section>
             <section className="factoriesSec">
               <h3 className="factoriesTitle">{this.state.name}</h3>
               <div className="factories">
-                {factories.map((factory) => {
+                {factories.map((factory, index) => {
                   return (
                     <div key={factory.factID} className="factory">
-                      <p>Factory Title: {factory.factTitle}</p>
+                      <div className="factoryTitle">Factory Title: {factory.factTitle}</div>
                       <div className="nodes">
                         {factory.nodes.map((node) => {
                           return <div key={uuidv4()} className="node">{node}</div>
                         })}
                       </div>
-                      <button>Delete Factory!</button>
+                      <button type="button" className="deleteBtn" onClick={(event) => this.onDeleteFactoryClick(index, event)}>Delete Factory!</button>
                     </div>
                   )
                 })}
@@ -130,16 +146,20 @@ class CreateTree extends Component {
           flex-direction: row;
           justify-content: space-between;
         }
+        .saveTree {
+          background: #90EE90;
+          color: white;
+        }
         input {
           background-color: white;
           color: #003366;
           font-family: 'Raleway', sans-serif;
-          height: 30px;
+          height: 25px;
           border-radius: 4px;
           border: 1px solid transparent;
           box-shadow: 0 1px 3px 0 #0000003b;
           transition: box-shadow 150ms ease;
-          margin-bottom: 20px;
+          margin-bottom: 10px;
           margin-right: 20px;
           outline: none;
           font-size: 14px;
@@ -182,7 +202,6 @@ class CreateTree extends Component {
           flex-direction: column;
           min-width: 200px;
           max-width: 250px;
-          border: 3px solid blue;
         }
         .nameTree {
           display: block;
@@ -202,21 +221,31 @@ class CreateTree extends Component {
           width: auto;
         }
         .factoriesTitle {
+          text-decoration: underline;
           text-align: center;
         }
         .factories {
           display: flex;
           flex-direction: column;
           flex-wrap: wrap;
-          border: 3px solid green;
         }
         .factory {
+          display: flex;
+          flex-direction: column;
           background: white;
           margin: 5px;
           padding: 5px 10px;
           border-radius: 4px;
           font-family: 'Raleway', sans-serif;
           color: #003366;
+        }
+        .factoryTitle {
+          align-self: center;
+        }
+        .deleteBtn {
+          background: #FF4500;
+          margin-top: 8px;
+          align-self: flex-end;
         }
         .nodes {
           display: flex;

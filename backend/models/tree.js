@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 
 const factoriesSchema = new mongoose.Schema({
-    title: {
+    factTitle: {
         type: String,
         required: false,
+    },
+    nodes: {
+        type: [Number],
+        required: true,
     },
     numNodes: {
         type: Number,
