@@ -14,7 +14,7 @@ import { LogIn, Register } from './components';
 import rootReducer from './reducers';
 import WithAuth from './components/auth/withAuth';
 import Dash from './components/tree/dash';
-import CreateTree from './components/tree/create';
+import CreateTree from './components/tree/createTree.jsx';
 import EditTree from './components/tree/edit';
 import Settings from './components/user/settings';
 

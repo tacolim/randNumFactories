@@ -10,7 +10,7 @@ const Landing = () => (
         <Link to="/register" className="links">Sign Up</Link>
       </nav>
     </header>
-    <div className="content">
+    <div className="landingContent">
       <div className="content__title">Random Number Factories</div>
       <div className="content__textbox">
         Make and store your own data trees with factories which produce up to 15 nodes of random numbers (you choose the number range).

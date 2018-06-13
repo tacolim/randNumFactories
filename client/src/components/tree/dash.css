@@ -12,6 +12,7 @@
   justify-content: space-between;
   align-items: center;
   font-family: 'Raleway', sans-serif;
+  margin-bottom: 10px;
 }
 .welcome span {
     color: #003366;
@@ -22,17 +23,13 @@
   color: #fff;
   padding: 10px 20px;
 }
-.content {
-    border: 3px solid red;
-}
 .content .empty {
   display: block;
-  padding: 75px;
+  padding: 75px 20px;
   background: #99adc2;
   text-align: center;
   text-decoration: none;
   color: #000;
-  border: 3px solid green;
 }
 .content .empty span {
   display: block;
@@ -48,7 +45,6 @@
   flex-wrap: wrap;
   justify-content: space-around;
   background: #249999;
-  border: 3px solid blue;
 }
 .trees .tree-link {
   min-width: 250px;

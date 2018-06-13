@@ -6,9 +6,9 @@ import UpdateEmail from './updateEmail';
 const Settings = props => (
   <Layout logout={props.logout}>
     <div className="root">
-      <header>
-        <h1>Update Your Account</h1>
-      </header>
+      <div className="settingsTitle">
+        <h2>Update Your Account</h2>
+      </div>
       <section className="content">
         <UpdatePassword />
         <UpdateEmail />
@@ -24,11 +24,9 @@ const Settings = props => (
         padding: 20px;
         border-radius: 4px;
       }
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;        
+      .settingsTitle {
+        font-family: 'Raleway', sans-serif;
+        color: #003366;
       }
     `}
     </style>
