@@ -1,6 +1,6 @@
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-const ROOT_URL = process.env.NODE_ENV === 'production' ? 'http://localhost:8080' : 'http://localhost:8080';
+const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://murmuring-ravine-52790.herokuapp.com/' : 'http://localhost:8080';
 export const USER_REGISTERED = 'USER_REGISTERED';
 export const USER_AUTHENTICATED = 'USER_AUTHENTICATED';
 export const USER_UNAUTHENTICATED = 'USER_UNAUTHENTICATED';
