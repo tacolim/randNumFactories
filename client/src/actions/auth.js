@@ -3,7 +3,7 @@ import axios from 'axios';
 export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
 export const UNAUTHENTICATE_USER = 'UNAUTHENTICATE_USER';
 
-const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://murmuring-ravine-52790.herokuapp.com/' : 'http://localhost:8080';
+const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://murmuring-ravine-52790.herokuapp.com' : 'http://localhost:8080';
 
 export const authenticate = (user, token) => {
   if (!token) {
