@@ -44,21 +44,6 @@ class CreateTree extends Component {
   // handle event for adding a factory
   onAddFactoryClick = (event) => {
     let factories = this.state.factories;
-    this.setState({
-        factories: factories.concat({
-          factID: uuidv4(),
-          factTitle: '',
-          nodes: [],
-          numNodes: 0,
-          rangeMin: 0,
-          rangeMax: 0,
-        }),
-    });
-  }
-
-  // handle updating factory
-  onUpdateFactoryClick = (id, event) => {
-    let factories = this.state.factories;
     let numNodes = parseInt(this.state.numNodes, 10);
     let rangeMin = parseInt(this.state.rangeMin, 10);
     let rangeMax = parseInt(this.state.rangeMax, 10);
@@ -73,22 +58,14 @@ class CreateTree extends Component {
     for (let i = 0; i < numNodes; i++) {
       nodes.push(this.getRand(rangeMin, rangeMax));
     }
-    let foundIndex = factories.findIndex(factory => factory.factID === id);
-    let factUpdated = {
-        factID: id,
-        factTitle: this.state.factTitle,
-        nodes: this.state.nodes,
-        numNodes: numNodes,
-        rangeMin: rangeMin,
-        rangeMax: rangeMax,
-    }
-    factories[foundIndex] = factUpdated;
     this.setState({
-        factories: factories,
-        factTitle: '',
-        numNodes: 0,
-        rangeMin: 0,
-        rangeMax: 0,
+        factories: factories.concat({
+          factTitle: this.state.factTitle,
+          nodes: this.state.nodes,
+          numNodes: numNodes,
+          rangeMin: rangeMin,
+          rangeMax: rangeMax,
+        }),
         nodes: [],
     });
   }
@@ -130,7 +107,7 @@ class CreateTree extends Component {
         <div className="root">
           <div className="createTitle">
             <h2>Customize Your Tree</h2>
-            <button type="button" className="saveTree" onClick={this.addTree}>Save Your Tree</button>
+            <button type="button" className="saveTree" onClick={this.addTree}>Save Your Tree!</button>
           </div>
           <section className="tree_content">
             <section className="tree-area">
@@ -138,8 +115,23 @@ class CreateTree extends Component {
                 <label htmlFor="tree">Name Your Tree: </label><br />
                 <input type="text" name="tree" value={this.state.name} onChange={event => this.handleChange(event, 'name')} placeholder="tree title" />
               </div>
-              <div className="factoryForm">
-                <button type="button" onClick={event => this.onAddFactoryClick(event)}>Add Factory</button>
+              <div className="factoryForm">}
+                <p>Add Random Number Factories by Filling Out the Below!</p>
+                <form>
+                  <label htmlFor="factoryTitle">Name Your Factory:</label><br/>
+                  <input type="text" name="factoryTitle" value={this.state.factTitle} onChange={event => this.handleChange(event, 'factTitle')} />
+                  <br/>
+                  <label htmlFor="factoryNumNodes">Number of Nodes (0-15):</label><br/>
+                  <input type="number" name="factoryNumNodes" min="0" max="15" value={this.state.numNodes} onChange={event => this.handleChange(event, 'numNodes')} />
+                  <br/>
+                  <label htmlFor="factoryRangeMin">Random Number Minimum:</label><br/>
+                  <input type="number" name="factoryRangeMin" value={this.state.rangeMin} onChange={event => this.handleChange(event, 'rangeMin')} />
+                  <br/>
+                  <label htmlFor="factoryRangeMax">Random Number Maximum:</label><br/>
+                  <input type="number" name="factoryRangeMax" value={this.state.rangeMax} onChange={event => this.handleChange(event, 'rangeMax')} />
+                  <br />
+                  <button type="button" onClick={event => this.onAddFactoryClick(event)}>Add Factory!</button>
+                </form>
               </div>
             </section>
             <section className="factoriesSec">
@@ -147,33 +139,14 @@ class CreateTree extends Component {
               <div className="factories">
                 {factories.map((factory, index) => {
                   return (
-                    <div key={factory.factID} className="factory">
+                    <div key={uuidv4()} className="factory">
                       <div className="factoryTitle">Factory Title: {factory.factTitle}</div>
-                      <p>Number of Nodes: {factory.nodes.length}; Range: {factory.rangeMin} to {factory.rangeMax}</p>
                       <div className="nodes">
                         {factory.nodes.map((node) => {
                           return <div key={uuidv4()} className="node">{node}</div>
                         })}
                       </div>
-                      <div>
-                        <form>
-                          <p>Edit Factory</p>
-                          <label htmlFor="factoryTitle">Name Your Factory:</label><br/>
-                          <input type="text" name="factoryTitle" value={this.state.factTitle} onChange={event => this.handleChange(event, 'factTitle')} />
-                          <br/>
-                          <label htmlFor="factoryNumNodes">Number of Nodes (0-15):</label><br/>
-                          <input type="number" name="factoryNumNodes" min="0" max="15" value={this.state.numNodes} onChange={event => this.handleChange(event, 'numNodes')} />
-                          <br/>
-                          <label htmlFor="factoryRangeMin">Random Number Minimum:</label><br/>
-                          <input type="number" name="factoryRangeMin" value={this.state.rangeMin} onChange={event => this.handleChange(event, 'rangeMin')} />
-                          <br/>
-                          <label htmlFor="factoryRangeMax">Random Number Maximum:</label><br/>
-                          <input type="number" name="factoryRangeMax" value={this.state.rangeMax} onChange={event => this.handleChange(event, 'rangeMax')} />
-                          <br />
-                          <button type="button" onClick={event => this.onUpdateFactoryClick(factory.factID, event)}>UpdateFactory</button>
-                        </form>
-                        <button type="button" className="deleteBtn" onClick={(event) => this.onDeleteFactoryClick(index, event)}>Delete Factory!</button>
-                      </div>
+                      <button type="button" className="deleteBtn" onClick={(event) => this.onDeleteFactoryClick(index, event)}>Delete Factory!</button>
                     </div>
                   )
                 })}
