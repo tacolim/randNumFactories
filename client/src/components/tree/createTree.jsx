@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Layout from '../layout';
+import { addTree } from '../../actions';
 import uuidv4 from 'uuid/v4';
 
 
@@ -76,6 +78,14 @@ class CreateTree extends Component {
     });
   }
 
+  addTree = (event) => {
+    event.preventDefault();
+    const name = this.state.name;
+    const factories = this.state.factories;
+    const tree =  { name, factories };
+    this.props.addTree(tree);
+  }
+
   render() {
     const { props } = this;
     let factories = this.state.factories;
@@ -85,7 +95,7 @@ class CreateTree extends Component {
         <div className="root">
           <div className="createTitle">
             <h2>Customize Your Tree</h2>
-            <button type="button" className="saveTree">Save Your Tree!</button>
+            <button type="button" className="saveTree" onClick={this.addTree}>Save Your Tree!</button>
           </div>
           <section className="tree_content">
             <section className="tree-area">
@@ -266,4 +276,10 @@ class CreateTree extends Component {
   }
 }
 
-export default CreateTree;
+const mapStateToProps = (state) => {
+  return {
+    trees: state.trees
+  };
+};
+
+export default connect(mapStateToProps, { addTree })(CreateTree);

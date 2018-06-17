@@ -46,7 +46,7 @@ const TreeController = {
         const user = await User.findOne({ username }).exec();
         const id = user._id;
   
-        const { tree, title, factories } = req.body;
+        const { title, factories } = req.body;
 
         date = new Date(Date.now());
         datevalues = [
@@ -100,8 +100,6 @@ const TreeController = {
         const updatedTree = await Tree.findByIDAndUpdate(
           { _id: req.params.TreeId }, { title: title || 'TreeUpdate_' + dateString, factories: factories }, { new: true }
         );
-  
-        const updateUser = await user.save();
 
         res.json({ updatedTree });
 
