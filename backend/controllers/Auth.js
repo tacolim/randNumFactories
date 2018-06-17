@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const SECRET = process.env.APP_SECRET;
+
 const AuthController = {
     async register(req, res) {
         try {
@@ -20,8 +21,11 @@ const AuthController = {
           }
           password = await bcrypt.hash(password, 12);
           const user = await User.create({ username, password });
+          console.log(`user ${user}`);
           const payload = { id: user._id, username: user.username };
+          console.log(`payload ${payload}`);
           const token = jwt.sign(payload, SECRET, { expiresIn: '1h' });
+          console.log(`token ${token}`);
           res.json({ user, token });
         } catch (e) {
           console.log(e);
