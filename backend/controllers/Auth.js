@@ -21,11 +21,8 @@ const AuthController = {
           }
           password = await bcrypt.hash(password, 12);
           const user = await User.create({ username, password });
-          console.log(`register user ${user}`);
           const payload = { id: user._id, username: user.username };
-          console.log(`register payload ${payload}`);
           const token = jwt.sign(payload, SECRET, { expiresIn: '1h' });
-          console.log(`register token ${token}`);
           res.json({ user, token });
         } catch (e) {
           console.log(e);
@@ -36,11 +33,8 @@ const AuthController = {
         const { username, password } = req.body;
         if (!username || !password) return res.status(422).json({ error: 'Request must have both username and password.' });
         const user = await User.authenticate(username, password);
-        console.log(`login user ${user}`);
         const payload = { id: user._id, username: user.username };
-        console.log(`login payload ${payload}`);
         const token = jwt.sign(payload, SECRET, { expiresIn: '1h' });
-        console.log(`login token ${token}`);
         return user ? res.json({ user, token }) : res.status(403).json({ error: 'failed to authenticate' });
       },
       async update(req, res) {
