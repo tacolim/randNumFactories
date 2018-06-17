@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router'
 import { connect } from 'react-redux';
 import Layout from '../layout';
 import { addTree } from '../../actions';
@@ -9,13 +10,14 @@ class CreateTree extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'tree title',
+      name: '',
       factories: [],
       factTitle: '',
       nodes: [],
       numNodes: 0,
       rangeMin: 0,
       rangeMax: 0,
+      toDash: false,
     };
   }
   
@@ -77,18 +79,27 @@ class CreateTree extends Component {
         factories: newFactories,
     });
   }
-
+  
+  // save tree to database
   addTree = (event) => {
     event.preventDefault();
-    const name = this.state.name;
+    const title = this.state.name;
     const factories = this.state.factories;
-    const tree =  { name, factories };
+    const tree =  { title, factories };
+    console.log(`createTree 88 tree info: `, tree.name, tree.factories);
     this.props.addTree(tree);
+    this.setState({
+      toDash: true,
+    })
   }
 
   render() {
     const { props } = this;
     let factories = this.state.factories;
+
+    if (this.state.toDash === true) {
+      return <Redirect to='/trees' />;
+    }
 
     return (
       <Layout logout={props.logout}>
@@ -101,7 +112,7 @@ class CreateTree extends Component {
             <section className="tree-area">
               <div className="nameTree">
                 <label htmlFor="tree">Name Your Tree: </label><br />
-                <input type="text" name="tree" value={this.state.name} onChange={event => this.handleChange(event, 'name')} />
+                <input type="text" name="tree" value={this.state.name} onChange={event => this.handleChange(event, 'name')} placeholder="tree title" />
               </div>
               <div className="factoryForm">
                 <p>Add Random Number Factories by Filling Out the Below!</p>
@@ -127,7 +138,7 @@ class CreateTree extends Component {
               <div className="factories">
                 {factories.map((factory, index) => {
                   return (
-                    <div key={factory.factID} className="factory">
+                    <div key={uuidv4()} className="factory">
                       <div className="factoryTitle">Factory Title: {factory.factTitle}</div>
                       <div className="nodes">
                         {factory.nodes.map((node) => {

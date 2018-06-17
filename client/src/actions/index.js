@@ -9,6 +9,7 @@ export const GET_TREES = 'GET_TREES';
 export const GET_TREE = 'GET_TREE';
 export const ADD_TREE = 'ADD_TREE';
 export const EDIT_TREE = 'EDIT_TREE';
+export const DELETE_TREE = 'DELETE_TREE';
 
 export const authError = error => {
   return {
@@ -111,6 +112,7 @@ export const getTree = id => async (dispatch) => {
 export const addTree = (tree) => {
   const authToken = window.localStorage.getItem('token');
   return dispatch => {
+    console.log(`src/actions/index.js 114 ; tree ${tree.title} ${tree.factories}`);
     axios
       .post(`${ROOT_URL}/tree/create`, tree, {
         headers: {
@@ -150,8 +152,23 @@ export const editTree = (id, tree) => {
   };
 };
 
-export const removeTree = () => (dispatch) => {
-  dispatch({
-    type: 'REMOVE_TREE'
-  })
+export const deleteTree = (id) => {
+  const authToken = window.localStorage.getItem('token');
+  return dispatch => {
+    axios
+      .delete(`${ROOT_URL}/tree/delete`, id, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        }
+      })
+      .then((res) => {
+        dispatch({
+          type: DELETE_TREE,
+          payload: res
+        });
+      })
+      .catch(() => {
+        dispatch(authError('Failed to delete tree'));
+      });
+  };
 };

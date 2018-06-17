@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getTrees } from '../../actions';
+import { getTrees, deleteTree } from '../../actions';
 import Layout from '../layout';
 import './dash.css';
+
 
 class Dash extends Component {
   componentDidMount() {
     this.props.getTrees();
   }
+
+  // handle event for deleting a tree
+  // onDeleteTreeClick = (id, event) => {
+  //   event.preventDefault();
+  //   this.props.deleteTree(id);
+  // }
 
   render() {
     const { props } = this;
@@ -22,7 +29,10 @@ class Dash extends Component {
           </div>
           <section className="content">
             <div className="trees">{!!props.trees.length && props.trees.map(tree => (
-              <Link to={`tree/edit/${tree._id}`} key={tree._id} className="tree-link">{tree.title}</Link>
+              <div key={tree._id}>
+                <Link to={`tree/edit/${tree._id}`} className="tree-link">{tree.title}</Link>
+                {/* <button type='button' className="deleteBtn" onClick={(event) => this.onDeleteTreeClick(tree._id, event)}>Delete Tree!</button> */}
+              </div>
               ))}
             </div>
             {!props.trees.length &&
@@ -42,4 +52,4 @@ const mapStateToProps = state => ({
   trees: state.trees,
 });
 
-export default connect(mapStateToProps, { getTrees })(Dash);
+export default connect(mapStateToProps, { getTrees, deleteTree })(Dash);

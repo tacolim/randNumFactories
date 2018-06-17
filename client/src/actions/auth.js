@@ -12,7 +12,6 @@ export const authenticate = (user, token) => {
   if (user) {
     window.localStorage.setItem('user', JSON.stringify(user));
   }
-  console.log('called');
   return {
     type: AUTHENTICATE_USER,
     payload: {

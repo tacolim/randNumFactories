@@ -31,6 +31,7 @@ server.post('/auth/update', auth.update);
 server.get('/trees', tree.getAll);
 server.post('/tree/create', tree.create);
 server.post('/tree/edit', tree.edit);
+server.delete('/tree/delete', tree.delete);
 server.get('/tree/:id', tree.get);
 server.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));

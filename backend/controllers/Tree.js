@@ -1,4 +1,3 @@
-const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Tree = require('../models/tree');
@@ -48,6 +47,8 @@ const TreeController = {
   
         const { title, factories } = req.body;
 
+        console.log(`backend/controllers/Tree 50 tree info: ${title} ${factories}`)
+
         date = new Date(Date.now());
         datevalues = [
            date.getFullYear(),
@@ -58,15 +59,18 @@ const TreeController = {
            date.getSeconds(),
         ];
         dateString = datevalues.join('-');
+
+        // if (title === '') {
+        //   title = 'TreeCreated_' + dateString;
+        // }
   
         const newTree = await Tree.create({
           author: id,
-          title: title || 'Tree_' + dateString,
+          title: title || 'TreeCreated_' + dateString,
           factories: factories,
         });
   
         user.trees.push(newTree._id);
-        const updateUser = await user.save();
         res.json({
           id: newTree._id,
           tree: newTree,
@@ -82,7 +86,6 @@ const TreeController = {
         const decodedToken = await jwt.verify(authToken, SECRET);
         const { username } = decodedToken;
         const user = await User.findOne({ username }).exec();
-        const id = user._id;
   
         const { title, factories } = req.body;
 
@@ -106,6 +109,24 @@ const TreeController = {
       } catch (e) {
         console.log('/tree/edit', e);
         res.status(422).json({ error: 'Failed to edit tree' });
+      }
+    },
+    async delete(req, res) {
+      try {
+        const authToken = req.headers.authorization.replace('Bearer ', '');
+        const decodedToken = await jwt.verify(authToken, SECRET);
+        const { username } = decodedToken;
+        const user = await User.findOne({ username }).exec();
+  
+        const TreeID = req.body.id;
+
+        const deletedTree = await Tree.findByIDAndRemove(TreeID);
+
+        res.json({ deletedTree });
+
+      } catch (e) {
+        console.log('/tree/delete', e);
+        res.status(422).json({ error: 'Failed to delete tree' });
       }
     },
   };
