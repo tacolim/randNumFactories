@@ -47,9 +47,6 @@ const TreeController = {
   
         const { title, factories } = req.body;
 
-        console.log(`backend/controllers/Tree 50 tree info: ${title}`);
-        console.log(factories);
-
         date = new Date(Date.now());
         datevalues = [
            date.getFullYear(),
@@ -112,11 +109,7 @@ const TreeController = {
     },
     async delete(req, res) {
       try {
-        console.log('serverside req.body', req.body);
-        console.log('serverside req.params', req.params);
         const id = req.params.id;
-        console.log('serverside id:', id);
-        
 
         const deletedTree = await Tree.findOneAndRemove({ _id: id });
 

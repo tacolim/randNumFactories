@@ -154,7 +154,6 @@ class EditTree extends Component {
     // handle event for deleting a tree
     onDeleteTreeClick = (id, event) => {
       event.preventDefault();
-      console.log(id);
       this.props.deleteTree(id);
       this.setState({
         toDash: true,

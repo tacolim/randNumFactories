@@ -112,8 +112,6 @@ export const getTree = id => async (dispatch) => {
 export const addTree = (tree) => {
   const authToken = window.localStorage.getItem('token');
   return dispatch => {
-    console.log(`src/actions/index.js 114 ; tree ${tree.title}`);
-    console.log(tree.factories);
     axios
       .post(`${ROOT_URL}/tree/create`, tree, {
         headers: {
@@ -154,7 +152,6 @@ export const editTree = (id, tree) => {
 };
 
 export const deleteTree = (id) => {
-  console.log(id);
   const authToken = window.localStorage.getItem('token');
   return dispatch => {
     axios
