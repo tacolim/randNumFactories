@@ -143,7 +143,7 @@ class CreateTree extends Component {
                 <label htmlFor="tree">Name Your Tree: </label><br />
                 <input type="text" name="tree" value={this.state.name} onChange={event => this.handleChange(event, 'name')} placeholder="tree title" />
               </div>
-              <div className="factoryForm">
+              <div>
                 <button type="button" onClick={event => this.onAddFactoryClick(event)}>Add Factory</button>
               </div>
             </section>
