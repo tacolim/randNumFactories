@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const factoriesSchema = new mongoose.Schema({
+    factID: {
+        type: String,
+        required: true,
+    },
     factTitle: {
         type: String,
         required: false,

@@ -37,7 +37,7 @@ const WithAuth = ProtectedComponent => {
       this.props.push('/login'); 
     }
     render() {
-      return this.props.authenticated ? <ProtectedComponent user={this.props.auth.user.username} logout={this.props.unauthenticate} /> : null;
+      return this.props.authenticated ? <ProtectedComponent user={this.props.auth.user.username} logout={this.props.unauthenticate} match={this.props.match} /> : null;
     }
   }
   return connect(mapStateToProps, mapDispatchToProps)(Auth);

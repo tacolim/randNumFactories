@@ -49,10 +49,10 @@ class SignUp extends Component {
           <label>Confirm Password:</label>
           <input type="password" name="confirmPassword" placeholder="confirm password" onChange={e => this.handleChange(e, 'confirmPassword')} value={this.state.confirmPassword}/>
           
-          <button type="submit">Sign up!</button>
+          <button type="submit" className="authBtn">Sign up!</button>
         </form>
         <section className="alternativeActions">
-          <span>Already have an account, <Link to="/login">Login!</Link></span>
+          <span>Already have an account? <Link to="/login">Login!</Link></span>
         </section>
       </div>
     );

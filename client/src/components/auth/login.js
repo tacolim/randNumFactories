@@ -50,7 +50,7 @@ class LogIn extends Component {
           <input type="email" name="email" placeholder="email" value={this.state.email} onChange={e => this.handleChange(e, 'email')}/>
           <label>Password:</label>
           <input type="password" name="password" placeholder="password" value={this.state.password} onChange={e => this.handleChange(e, 'password')}/>
-          <button type="submit">Login</button>
+          <button type="submit" className="authBtn">Login</button>
         </form>
         <section className="alternativeActions">
           <span>If you do not already have an account, <Link to="/register">Sign up!</Link></span>

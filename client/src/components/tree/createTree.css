@@ -14,6 +14,10 @@ justify-content: space-between;
 background: #90EE90;
 color: white;
 }
+.deleteTree {
+background: red;
+color: white;
+}
 input {
 background-color: white;
 color: #003366;
@@ -54,30 +58,20 @@ font-family: 'Raleway', sans-serif;
 }
 .tree_content {
 display: flex;
-flex-direction: row;
-flex-wrap: wrap;
-justify-content: space-around;
+flex-direction: column;
 background: #99adc2;
 padding: 10px;
 border-radius: 4px;
 }
 .tree-area {
 display: flex;
-flex-direction: column;
-min-width: 200px;
-max-width: 250px;
+flex-direction: row;
+justify-content: space-between;
 }
 .nameTree {
 display: block;
 font-family: 'Raleway', sans-serif;
 color: #003366;
-}
-.factoryForm p {
-font-family: 'Raleway', sans-serif;
-color: #003366;
-text-align: center;
-font-style: italic;
-
 }
 .factoriesSec {
 font-family: 'Raleway', sans-serif;
@@ -90,21 +84,30 @@ text-align: center;
 }
 .factories {
 display: flex;
-flex-direction: column;
+flex-direction: row;
 flex-wrap: wrap;
 }
-.factory {
+.factories p {
+  text-align: center;
+}
+.factoryAll {
 display: flex;
 flex-direction: column;
 background: white;
 margin: 5px;
 padding: 5px 10px;
-border-radius: 4px;
+border-radius: 10px 0px;
 font-family: 'Raleway', sans-serif;
 color: #003366;
 }
+.factory {
+    padding: 5px;
+    border: 2px solid #003366;
+    border-radius: 10px 0px;
+}
 .factoryTitle {
 align-self: center;
+text-align: center;
 }
 .deleteBtn {
 background: #FF4500;
@@ -120,6 +123,22 @@ justify-content: center
 .node {
 border: 1px solid #003366;
 padding: 2px;
-border-radius: 4px;
+border-radius: 4px 0px;
 margin: 3px;
+}
+.factoryForm {
+    margin-top: 10px;
+    padding: 5px;
+    background: #004d99;
+    color: #fff;
+    border-radius: 10px 0px;
+}
+.factoryForm p {
+    text-decoration: underline;
+}
+.factoryForm label {
+    color: #fff;
+}
+.factoryForm button {
+    background: #90EE90;
 }

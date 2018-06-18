@@ -15,6 +15,7 @@ import rootReducer from './reducers';
 import WithAuth from './components/auth/withAuth';
 import Dash from './components/tree/dash';
 import CreateTree from './components/tree/createTree.jsx';
+import EditTree from './components/tree/edit.jsx';
 import Settings from './components/user/settings';
 
 const history = createHistory();
@@ -24,18 +25,21 @@ const store = createStore(rootReducer,
     applyMiddleware(ReduxThunk, routerMiddleware(history)),
   );
 
-  ReactDOM.render(
-      <Provider store={store}>
-        <Router>
-          <Switch>
-            <Route exact path="/" component={App} />
-            <Route path="/login" component={LogIn} />
-            <Route path="/register" component={Register} />
-            <Route path="/trees" component={WithAuth(Dash)} />
-            <Route path="/tree/create" component={WithAuth(CreateTree)} />
-            <Route path="/settings" component={WithAuth(Settings)} />
-          </Switch>
-        </Router>
-      </Provider>,
-    document.getElementById('root'),
-  );
+const AuthEdit = WithAuth(EditTree);
+
+ReactDOM.render(
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={App} />
+          <Route path="/login" component={LogIn} />
+          <Route path="/register" component={Register} />
+          <Route path="/trees" component={WithAuth(Dash)} />
+          <Route path="/tree/create" component={WithAuth(CreateTree)} />
+          <Route exact path="/tree/edit/:id" render={props => <AuthEdit {...props} />} />
+          <Route path="/settings" component={WithAuth(Settings)} />
+        </Switch>
+      </Router>
+    </Provider>,
+  document.getElementById('root'),
+);
