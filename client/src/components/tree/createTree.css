@@ -1,0 +1,144 @@
+.root {
+max-width: 1440px;
+margin: 0 auto;
+padding: 20px;
+}
+.createTitle {
+font-family: 'Raleway', sans-serif;
+color: #003366;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+}
+.saveTree {
+background: #90EE90;
+color: white;
+}
+.deleteTree {
+background: red;
+color: white;
+}
+input {
+background-color: white;
+color: #003366;
+font-family: 'Raleway', sans-serif;
+height: 25px;
+border-radius: 4px;
+border: 1px solid transparent;
+box-shadow: 0 1px 3px 0 #0000003b;
+transition: box-shadow 150ms ease;
+margin-bottom: 10px;
+margin-right: 20px;
+outline: none;
+font-size: 14px;
+padding: 0 15px 0 10px;
+}
+input:focus {
+box-shadow: 0 1px 3px 0 #cfd7df;
+}
+button {
+background-color: #003366;
+color: white;
+font-family: 'Raleway', sans-serif;
+height: 30px;
+border-radius: 4px;
+border: 1px solid transparent;
+box-shadow: 0 1px 3px 0 #0000003b;
+transition: box-shadow 150ms ease;
+margin-bottom: 20px;
+margin-right: 20px;
+outline: none;
+font-size: 14px;
+padding: 0 15px 0 10px;
+
+}
+label {
+color: #003366;
+font-family: 'Raleway', sans-serif;
+}
+.tree_content {
+display: flex;
+flex-direction: column;
+background: #99adc2;
+padding: 10px;
+border-radius: 4px;
+}
+.tree-area {
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+}
+.nameTree {
+display: block;
+font-family: 'Raleway', sans-serif;
+color: #003366;
+}
+.factoriesSec {
+font-family: 'Raleway', sans-serif;
+color: #003366;
+width: auto;
+}
+.factoriesTitle {
+text-decoration: underline;
+text-align: center;
+}
+.factories {
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+}
+.factories p {
+  text-align: center;
+}
+.factoryAll {
+display: flex;
+flex-direction: column;
+background: white;
+margin: 5px;
+padding: 5px 10px;
+border-radius: 10px 0px;
+font-family: 'Raleway', sans-serif;
+color: #003366;
+}
+.factory {
+    padding: 5px;
+    border: 2px solid #003366;
+    border-radius: 10px 0px;
+}
+.factoryTitle {
+align-self: center;
+text-align: center;
+}
+.deleteBtn {
+background: #FF4500;
+margin-top: 8px;
+align-self: flex-end;
+}
+.nodes {
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: center
+}
+.node {
+border: 1px solid #003366;
+padding: 2px;
+border-radius: 4px 0px;
+margin: 3px;
+}
+.factoryForm {
+    margin-top: 10px;
+    padding: 5px;
+    background: #004d99;
+    color: #fff;
+    border-radius: 10px 0px;
+}
+.factoryForm p {
+    text-decoration: underline;
+}
+.factoryForm label {
+    color: #fff;
+}
+.factoryForm button {
+    background: #90EE90;
+}

@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
+import axios from 'axios';
 import uuidv4 from 'uuid/v4';
 import Layout from '../layout';
-import { addTree } from '../../actions';
+import { getTree, editTree, deleteTree } from '../../actions';
 import './createTree.css';
 
+axios.defaults.withCredentials = true;
+const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://murmuring-ravine-52790.herokuapp.com' : 'http://localhost:8080';
 
-class CreateTree extends Component {
+class EditTree extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +23,35 @@ class CreateTree extends Component {
       rangeMax: 0,
       toDash: false,
     };
+  }
+
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    this.setTree(id);
+    console.log(`src/components/tree/edit/30 this got called ${this.props.match.params}`);
+
+  }
+
+  async setTree(id) {
+    try {
+      const authToken = window.localStorage.getItem('token');
+      const { data } = await axios.get(`${ROOT_URL}/tree/${id}`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      const { title, factories } = data;
+
+      // we have tree, now we have to set the tree to edit;
+      console.log('src/components/tree/edit/40 set tree: ', title, factories);
+      this.setState({ 
+        name: title,
+        factories: factories });
+      console.log('src/components/tree/edit/51 after setState tree: ',this.state.name, this.state.factories)
+    } catch (e) {
+      console.log('src/components/tree/edit/45 set tree error: ', e);
+    }
   }
   
   // handle event for changes in form fields
@@ -41,14 +73,12 @@ class CreateTree extends Component {
     }
   }
 
-
   // handle event for adding a factory
   onAddFactoryClick = (event) => {
     let factories = this.state.factories;
-    const newFactID = uuidv4();
     this.setState({
         factories: factories.concat({
-          factID: newFactID,
+          factID: uuidv4(),
           factTitle: '',
           nodes: [],
           numNodes: 0,
@@ -107,22 +137,34 @@ class CreateTree extends Component {
   }
   
   // save tree to database
-  addTree = (event) => {
+  updateTree = (event) => {
     event.preventDefault();
     const title = this.state.name;
     const factories = this.state.factories;
-    console.log(this.state.factories);
+    const { id } = this.props.match.params;
     const tree =  { title, factories };
-    console.log(`createTree 88 tree info: `, tree.title, tree.factories);
-    this.props.addTree(tree);
+    console.log(`src/components/tree/edit/137 tree info: `, id, tree.title)
+    console.log(tree.factories);
+    this.props.editTree(id, tree);
     this.setState({
       toDash: true,
     })
   }
 
+    // handle event for deleting a tree
+    onDeleteTreeClick = (id, event) => {
+      event.preventDefault();
+      console.log(id);
+      this.props.deleteTree(id);
+      this.setState({
+        toDash: true,
+      })
+    }
+
   render() {
     const { props } = this;
     let factories = this.state.factories;
+    const { id } = this.props.match.params;
 
     if (this.state.toDash === true) {
       return <Redirect to='/trees' />;
@@ -132,18 +174,19 @@ class CreateTree extends Component {
       <Layout logout={props.logout}>
         <div className="root">
           <div className="createTitle">
-            <h2>Customize Your Tree</h2>
+            <h2>Update Your Tree</h2>
             <div>
-              <button type="button" className="saveTree" onClick={this.addTree}>Save Tree</button>
+              <button type="button" className="saveTree" onClick={this.updateTree}>Update Tree</button>
+              <button type="button" className="deleteTree" onClick={(event) => this.onDeleteTreeClick(id, event)}>Delete Tree</button>
             </div>
           </div>
           <section className="tree_content">
             <section className="tree-area">
               <div className="nameTree">
-                <label htmlFor="tree">Name Your Tree: </label><br />
+                <label htmlFor="tree">Update Tree's Title: </label><br />
                 <input type="text" name="tree" value={this.state.name} onChange={event => this.handleChange(event, 'name')} placeholder="tree title" />
               </div>
-              <div className="factoryForm">
+              <div>
                 <button type="button" onClick={event => this.onAddFactoryClick(event)}>Add Factory</button>
               </div>
             </section>
@@ -196,8 +239,8 @@ class CreateTree extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    trees: state.trees
+    treeToEdit: state.tree
   };
 };
 
-export default connect(mapStateToProps, { addTree })(CreateTree);
+export default connect(mapStateToProps, { getTree, editTree, deleteTree })(EditTree);

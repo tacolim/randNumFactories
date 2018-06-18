@@ -13,10 +13,10 @@ const TreeController = {
         const decodedToken = await jwt.verify(authToken, SECRET);
         const { username } = decodedToken;
         const user = await User.findOne({ username }).exec();
-        const { title, content: tree } = await Tree.findOne({ _id: id }).exec();
+        const { title, factories } = await Tree.findOne({ _id: id }).exec();
         res.json({
-          tree,
           title,
+          factories
         });
       } catch (e) {
         console.log('get tree: ', e);
@@ -47,7 +47,8 @@ const TreeController = {
   
         const { title, factories } = req.body;
 
-        console.log(`backend/controllers/Tree 50 tree info: ${title} ${factories}`)
+        console.log(`backend/controllers/Tree 50 tree info: ${title}`);
+        console.log(factories);
 
         date = new Date(Date.now());
         datevalues = [
@@ -59,10 +60,6 @@ const TreeController = {
            date.getSeconds(),
         ];
         dateString = datevalues.join('-');
-
-        // if (title === '') {
-        //   title = 'TreeCreated_' + dateString;
-        // }
   
         const newTree = await Tree.create({
           author: id,
@@ -100,9 +97,11 @@ const TreeController = {
         ];
         dateString = datevalues.join('-');
 
-        const updatedTree = await Tree.findByIDAndUpdate(
-          { _id: req.params.TreeId }, { title: title || 'TreeUpdate_' + dateString, factories: factories }, { new: true }
-        );
+        const { id } = req.params;
+
+        const updatedTree = await Tree.findOneAndUpdate(
+          { _id: id }, { title: title || 'TreeUpdate_' + dateString, factories: factories }, { new: true }
+        ).exec();
 
         res.json({ updatedTree });
 
@@ -113,14 +112,13 @@ const TreeController = {
     },
     async delete(req, res) {
       try {
-        const authToken = req.headers.authorization.replace('Bearer ', '');
-        const decodedToken = await jwt.verify(authToken, SECRET);
-        const { username } = decodedToken;
-        const user = await User.findOne({ username }).exec();
-  
-        const TreeID = req.body.id;
+        console.log('serverside req.body', req.body);
+        console.log('serverside req.params', req.params);
+        const id = req.params.id;
+        console.log('serverside id:', id);
+        
 
-        const deletedTree = await Tree.findByIDAndRemove(TreeID);
+        const deletedTree = await Tree.findOneAndRemove({ _id: id });
 
         res.json({ deletedTree });
 
